@@ -120,9 +120,34 @@ function App() {
     setFavorites(updatedFavorites);
   };
 
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+
+    return savedTheme === 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      'theme',
+      isDarkTheme ? 'dark' : 'light'
+    );
+  }, [isDarkTheme]);
+
   return ( 
-  <>
+  <div className={isDarkTheme ? 'app dark-theme' : 'app light-theme'}>
     <Navigation />
+      
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={() => setIsDarkTheme(!isDarkTheme)}
+    >
+      <span>{isDarkTheme ? '🌙 Dark' : '☀️ Light'}</span>
+
+      <span className="theme-toggle__switch">
+        <span className="theme-toggle__circle" />
+      </span>
+    </button>  
 
     <Routes>
       <Route
@@ -159,7 +184,7 @@ function App() {
           element={<MovieDetailsPage/>}
         />
     </Routes>
-  </>
+  </div>
   );
 }
 

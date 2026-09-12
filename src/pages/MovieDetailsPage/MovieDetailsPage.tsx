@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMovieById } from "../../services/moviesApi";
 import type { Movie } from '../../types/Movie';
+import './MovieDetailsPage.css';
 
 export const MovieDetailsPage = () => {
   const { id } = useParams();
@@ -64,13 +65,21 @@ export const MovieDetailsPage = () => {
         )}
 
         <div className="movie-details__info">
-          <h2>{movie.title}</h2>
+          <h2 className="movie-details__title">
+            {movie.title}
+          </h2>
 
-          <p>Release date: {movie.release_date}</p>
+          <p className="movie-details__meta">
+            Release date: {movie.release_date}
+          </p>
 
-          <p>Rating: {movie.vote_average}</p>
+          <p className="movie-details__rating">
+            ⭐ {movie.vote_average.toFixed(1)}
+          </p>
 
-          <p>{movie.overview}</p>
+          <p className="movie-details__overview">
+            {movie.overview}
+          </p>
         </div>
       </div>
     )}

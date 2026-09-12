@@ -1,6 +1,7 @@
 import type { Movie } from '../../types/Movie';
 import { SearchForm } from '../../components/SearchForm/SearchForm';
 import { MovieCard } from '../../components/MovieCard/MovieCard';
+import './HomePage.css';
 
 type Props = {
   movies: Movie[];
@@ -33,11 +34,13 @@ export const HomePage = ({
 }: Props) => {
   return (
     <div className="page-container">
-      <h1>Movie Search App</h1>
+      <h1 className="page-title">Movie Search App</h1>
 
       <SearchForm onSearch={onSearch} />
 
-      <p>Favorites: {favorites.length}</p>
+      <p className="favorites-count">
+        <span>Favorites:</span> {favorites.length}
+      </p>
 
       {isLoading && <p>Loading...</p>}
 

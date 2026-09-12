@@ -1,0 +1,27 @@
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--card-color);
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--secondary-text-color);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+.nav-link.active {
+  color: var(--accent-color);
+  font-weight: 700;
+  text-decoration: none;
+}

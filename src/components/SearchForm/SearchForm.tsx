@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './SearchForm.css';
 
 type Props = { onSearch: (query: string) => void; };
 

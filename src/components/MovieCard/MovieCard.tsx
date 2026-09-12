@@ -1,3 +1,4 @@
+import './MovieCard.css';
 import type { Movie } from "../../types/Movie";
 import { Link } from "react-router-dom";
 
@@ -37,9 +38,13 @@ export const MovieCard = ({
         <h2>{movie.title}</h2>
       </Link>
         
-      <p>{movie.release_date.slice(0, 4)}</p>
+      <p className="movie-card__meta">
+        {movie.release_date.slice(0, 4) || 'Unknown release date'}
+      </p>
 
-      <p>⭐ {movie.vote_average.toFixed(1)}</p>
+      <p className="movie-card__rating">
+        ⭐ {movie.vote_average.toFixed(1)}
+      </p>
 
       {isFavorite ? (
         <button
