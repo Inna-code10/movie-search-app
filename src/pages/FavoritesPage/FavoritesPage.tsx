@@ -11,13 +11,13 @@ export const FavoritesPage = ({
   onRemoveFromFavorites,
 }: Props) => {
   return (
-    <div>
+    <div className="page-container">
       <h1>Favorites</h1>
 
       {favorites.length === 0 ? (
         <p>No favorite movies yet</p>
       ) : (
-        <div className="movies">
+        <div className="movies-grid">
           {favorites.map((movie) => (
             <MovieCard
               key={movie.id}

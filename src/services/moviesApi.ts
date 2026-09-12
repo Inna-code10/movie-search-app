@@ -2,10 +2,15 @@ import type { Movie } from "../types/Movie";
 
 const API_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
+type MoviesResponse = {
+  results: Movie[];
+  total_pages: number;
+}
+
 export const getMovies = async (
   query: string,
   page: number,
-): Promise<Movie[]> => {
+): Promise<MoviesResponse> => {
   const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&page=${page}`;
   
   const response = await fetch(url, {
@@ -21,7 +26,10 @@ export const getMovies = async (
 
   const data = await response.json();
 
-  return data.results;
+  return {
+    results: data.results,
+    total_pages: data.total_pages,
+  }
 };
 
 export const getMovieById = async (id: string): Promise<Movie> => {

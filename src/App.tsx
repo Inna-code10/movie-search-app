@@ -15,6 +15,7 @@ function App() {
   const [error, setError] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
 
   const [favorites, setFavorites] = useState<Movie[]>(() => {
@@ -45,7 +46,8 @@ function App() {
 
       const moviesFromServer = await getMovies(query, 1);
 
-      setMovies(moviesFromServer);
+      setMovies(moviesFromServer.results);
+      setTotalPages(moviesFromServer.total_pages);
     } catch {
       setError('Something went wrong. Please try again.');
     } finally {
@@ -55,6 +57,10 @@ function App() {
 
   const goToNextPage = () => {
     setPage(page + 1);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const goToPreviousPage = () => {
@@ -63,7 +69,36 @@ function App() {
     }
 
     setPage(page - 1);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
+
+  useEffect(() => {
+    if (!searchQuery) {
+      return;
+    }
+
+    const loadPage = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const moviesFromServer = await getMovies(searchQuery, page);
+        
+        setMovies(moviesFromServer.results);
+        setTotalPages(moviesFromServer.total_pages);
+      } catch {
+        setError('Something went wrong. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadPage();
+  }, [searchQuery, page]);
 
   const addToFavorites = (movie: Movie) => {
     const isAlreadyFavorite = favorites.some(
@@ -103,6 +138,7 @@ function App() {
             onAddToFavorites={addToFavorites}
             onRemoveFromFavorites={removeFromFavorites}
             page={page}
+            totalPages={totalPages}
             onNextPage={goToNextPage}
             onPreviousPage={goToPreviousPage}
           />

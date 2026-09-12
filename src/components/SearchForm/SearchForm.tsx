@@ -13,15 +13,22 @@ export const SearchForm = ({ onSearch }: Props ) => {
   }
     
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      className="search-form"
+      onSubmit={handleSubmit}
+    >
       <input
+        className="search-form__input"
         type="text"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search movie..."
       />
 
-      <button type="submit">
+      <button
+        className="search-form__button"
+        type="submit"
+      >
         Search
       </button>
     </form>

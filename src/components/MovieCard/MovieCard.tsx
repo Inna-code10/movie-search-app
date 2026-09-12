@@ -30,7 +30,10 @@ export const MovieCard = ({
         )}
       </Link>
       
-      <Link to={`/movie/${movie.id}`}>
+      <Link
+        to={`/movie/${movie.id}`}
+        className="movie-card__title-link"
+      >
         <h2>{movie.title}</h2>
       </Link>
         
@@ -41,6 +44,7 @@ export const MovieCard = ({
       {isFavorite ? (
         <button
           type="button"
+          className="favorite-button"
           onClick={() => onRemoveFromFavorites(movie.id)}
         >
           ❤️ Remove from Favorites
@@ -48,6 +52,7 @@ export const MovieCard = ({
       ) : (
         <button
           type="button"
+          className="favorite-button"
           onClick={() => onAddToFavorites(movie)}
         >
           🤍 Add to Favorites

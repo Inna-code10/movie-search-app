@@ -12,6 +12,7 @@ type Props = {
   onAddToFavorites: (movie: Movie) => void;
   onRemoveFromFavorites: (movieId: number) => void;
   page: number;
+  totalPages: number;
   onNextPage: () => void;
   onPreviousPage: () => void;
 };
@@ -26,11 +27,12 @@ export const HomePage = ({
   onAddToFavorites,
   onRemoveFromFavorites,
   page,
+  totalPages,
   onNextPage,
   onPreviousPage,
 }: Props) => {
   return (
-    <div>
+    <div className="page-container">
       <h1>Movie Search App</h1>
 
       <SearchForm onSearch={onSearch} />
@@ -49,7 +51,7 @@ export const HomePage = ({
         )}
 
       {!isLoading && !error && (
-        <div className="movies">
+        <div className="movies-grid">
           {movies.map((movie) => {
             const isFavorite = favorites.some(
               (favorite) => favorite.id === movie.id
@@ -68,9 +70,14 @@ export const HomePage = ({
         </div>
       )}
 
-      {hasSearched && !isLoading && !error && movies.length > 0 && (
-        <div>
+      {hasSearched &&
+        !isLoading &&
+        !error &&
+        movies.length > 0 &&
+        totalPages > 1 && (
+        <div className="pagination">
           <button
+            className="pagination__button"
             type="button"
             onClick={onPreviousPage}
             disabled={page === 1}
@@ -78,11 +85,15 @@ export const HomePage = ({
             Previous
           </button>
 
-          <span> Page {page} </span>
+          <span className="pagination__info">
+            Page {page} of {totalPages}
+          </span>
 
           <button
+            className="pagination__button"
             type="button"
             onClick={onNextPage}
+            disabled={page === totalPages}
           >
             Next
           </button>

@@ -36,8 +36,9 @@ export const MovieDetailsPage = () => {
   }, [id]);
 
   return (
-  <div>
+  <div className="page-container">
     <button
+      className="back-button"
       type="button"
       onClick={() => navigate(-1)}
     >
@@ -51,9 +52,10 @@ export const MovieDetailsPage = () => {
     {error && <p>{error}</p>}
 
     {!isLoading && !error && movie && (
-      <div>
+      <div className="movie-details">
         {movie.poster_path ? (
           <img
+            className="movie-details__poster"  
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
           />
@@ -61,13 +63,15 @@ export const MovieDetailsPage = () => {
          <p>No poster available</p>
         )}
 
-        <h2>{movie.title}</h2>
+        <div className="movie-details__info">
+          <h2>{movie.title}</h2>
 
-        <p>Release date: {movie.release_date}</p>
+          <p>Release date: {movie.release_date}</p>
 
-        <p>Rating: {movie.vote_average}</p>
+          <p>Rating: {movie.vote_average}</p>
 
-        <p>{movie.overview}</p>
+          <p>{movie.overview}</p>
+        </div>
       </div>
     )}
   </div>
