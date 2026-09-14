@@ -24,6 +24,7 @@ A responsive movie search application built with React and TypeScript using the 
 - TMDB API
 - CSS
 - localStorage
+- Vercel
 
 ## 📸 Screenshots
 
@@ -39,9 +40,9 @@ A responsive movie search application built with React and TypeScript using the 
 
 ![Movie Details](./screenshots/movie-details.png)
 
-## 🚀 Live Demo
+## 🌐 Live Demo
 
-Coming soon.
+[View Movie Search App](https://movie-search-app-omega-seven.vercel.app)
 
 ## 💻 Run Locally
 
