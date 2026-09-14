@@ -1,6 +1,7 @@
 import type { Movie } from '../../types/Movie';
 import { SearchForm } from '../../components/SearchForm/SearchForm';
 import { MovieCard } from '../../components/MovieCard/MovieCard';
+import { SortMovies } from '../../components/SortMovies/SortMovies';
 import './HomePage.css';
 
 type Props = {
@@ -16,6 +17,8 @@ type Props = {
   totalPages: number;
   onNextPage: () => void;
   onPreviousPage: () => void;
+  sortBy: string;
+  onSortChange: (value: string) => void;
 };
 
 export const HomePage = ({
@@ -31,16 +34,53 @@ export const HomePage = ({
   totalPages,
   onNextPage,
   onPreviousPage,
+  sortBy,
+  onSortChange,
 }: Props) => {
+  const sortedMovies = [...movies].sort((movieA, movieB) => {
+    switch (sortBy) {
+      case 'rating-desc':
+        return movieB.vote_average - movieA.vote_average;
+
+      case 'rating-asc':
+        return movieA.vote_average - movieB.vote_average;
+
+      case 'newest':
+        return (
+          new Date(movieB.release_date).getTime() -
+          new Date(movieA.release_date).getTime()
+        );
+
+      case 'oldest':
+        return (
+          new Date(movieA.release_date).getTime() -
+          new Date(movieB.release_date).getTime()
+        );
+
+      case 'title':
+        return movieA.title.localeCompare(movieB.title);
+
+      default:
+        return 0;
+    }
+  });
+
   return (
     <div className="page-container">
       <h1 className="page-title">Movie Search App</h1>
 
       <SearchForm onSearch={onSearch} />
 
-      <p className="favorites-count">
-        <span>Favorites:</span> {favorites.length}
-      </p>
+      <div className="home-controls">
+        <p className="favorites-count">
+          <span>Favorites:</span> {favorites.length}
+        </p>
+
+        <SortMovies
+          sortBy={sortBy}
+          onSortChange={onSortChange}
+        />
+      </div>
 
       {isLoading && <p>Loading...</p>}
 
@@ -55,7 +95,7 @@ export const HomePage = ({
 
       {!isLoading && !error && (
         <div className="movies-grid">
-          {movies.map((movie) => {
+          {sortedMovies.map((movie) => {
             const isFavorite = favorites.some(
               (favorite) => favorite.id === movie.id
             );

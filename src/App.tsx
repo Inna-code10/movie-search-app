@@ -17,6 +17,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('default');
 
   const [favorites, setFavorites] = useState<Movie[]>(() => {
     const savedFavorites = localStorage.getItem('favorites');
@@ -166,6 +167,8 @@ function App() {
             totalPages={totalPages}
             onNextPage={goToNextPage}
             onPreviousPage={goToPreviousPage}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
           />
         }
       />
